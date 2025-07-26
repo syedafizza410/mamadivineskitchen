@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
+import logo from "../../../public/logo.png"
 import React from "react";
-import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa"; // 👈 Import Icons
+import { FaFacebookF, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa"; // 👈 Import Icons
 
 const FooterSection = () => {
     return (
@@ -8,15 +10,16 @@ const FooterSection = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     
-                    {/* Logo & Description */}
                     <div>
-                        <h2 className="text-2xl font-bold mb-2">Mama&apos;s Kitchen</h2>
-                        <p className="text-sm">
-                            Taste the love of homemade food. Delivering warmth & flavor from our kitchen to your door.
-                        </p>
+                         <div className="flex items-center space-x-2 mb-2">
+    <Image src={logo} alt="Mama's Kitchen Logo" width={50} height={50} />
+    <h2 className="text-2xl font-bold">Mama&apos;s Kitchen</h2>
+  </div>
+  <p className="text-sm">
+    Taste the love of homemade food. Delivering warmth & flavor from our kitchen to your door.
+  </p>
                     </div>
 
-                    {/* Quick Links */}
                     <div>
                         <h3 className="text-xl font-semibold mb-2">Quick Links</h3>
                         <ul className="space-y-1 text-sm">
@@ -27,7 +30,6 @@ const FooterSection = () => {
                         </ul>
                     </div>
 
-                    {/* Contact Info */}
                     <div>
                         <h3 className="text-xl font-semibold mb-2">Contact</h3>
                         <p className="text-sm">📍 Karachi, Pakistan</p>
@@ -35,18 +37,17 @@ const FooterSection = () => {
                         <p className="text-sm">✉️ mamadivineskitchen@gmail.com</p>
                     </div>
 
-                    {/* Social Media */}
                     <div>
                         <h3 className="text-xl font-semibold mb-2">Follow Us</h3>
                         <div className="flex space-x-4 text-2xl">
-                            <a href="#" className="hover:text-gray-300"><FaFacebookF /></a>
-                            <a href="#" className="hover:text-gray-300"><FaInstagram /></a>
-                            <a href="#" className="hover:text-gray-300"><FaYoutube /></a>
+                            <a href="https://foodpanda.go.link/efANo" className="hover:text-gray-300"><FaFacebookF /></a>
+                            <a href="https://www.instagram.com/mamasdivineskitchen?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="hover:text-gray-300"><FaInstagram /></a>
+                            <a href="https://www.youtube.com/@Mamadivineskitchen" className="hover:text-gray-300"><FaYoutube /></a>
+                            <a href="https://www.tiktok.com/@mamas.kitchen28?_t=ZS-8yLS7HDo28y&_r=1" className="hover:text-gray-300"><FaTiktok /></a>
                         </div>
                     </div>
                 </div>
 
-                {/* Bottom */}
                 <div className="mt-8 border-t border-white pt-4 text-sm text-center">
                     &copy; {new Date().getFullYear()} Mama&apos;s Kitchen. All rights reserved.
                 </div>

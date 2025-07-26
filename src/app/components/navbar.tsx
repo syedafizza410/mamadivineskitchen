@@ -9,7 +9,6 @@ export default function Navbar() {
 
   return (
     <div>
-      {/* Top Bar (Hidden on ≤ 340px) */}
       <div className="bg-red-900 text-white text-sm px-6 py-2 flex justify-between items-center max-[340px]:hidden">
         <div className="flex items-center space-x-4 text-xs sm:text-sm lg:text-base">
           <span>📞 +923233956495</span>
@@ -17,9 +16,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main Navbar */}
       <div className="bg-[#FAFAF2] px-6 py-4 flex justify-between items-center relative">
-        {/* Logo */}
         <div className="flex items-center space-x-2">
           <Image src={img1} alt="Logo" width={60} height={1} />
           <h1 className="text-2xl md:text-3xl font-serif font-semibold text-red-900">Mama&apos;s Kitchen</h1>
@@ -42,14 +39,18 @@ export default function Navbar() {
   ))}
 </nav>
 
-        {/* Order Button */}
         <div className="hidden md:block">
-          <button className="text-black border border-red-900 px-5 py-1 rounded-full hover:bg-red-900 hover:text-white transition-all">
-            Order Now
-          </button>
+          <button
+  onClick={() => {
+    const section = document.getElementById("menu");
+    section?.scrollIntoView({ behavior: "smooth" });
+  }}
+  className="text-black border border-red-900 px-5 py-1 rounded-full hover:bg-red-900 hover:text-white transition-all"
+>
+  Order Now
+</button>
         </div>
 
-        {/* Hamburger Menu Icon (Mobile) */}
         <div className="md:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -71,10 +72,8 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Dropdown Menu (Mobile) */}
         {menuOpen && (
           <div className="absolute top-full left-0 w-full bg-[#FAFAF2] shadow-md px-6 py-4 flex flex-col space-y-3 z-10 md:hidden">
-            {/* Show contact info when top bar is hidden */}
             <div className="flex flex-col text-sm text-red-900 space-y-4 max-[340px]:block hidden">
               <span>📞 +923233956495</span>
               <span>📧 mamadivineskitchen@gmail.com</span>
@@ -82,12 +81,19 @@ export default function Navbar() {
 
             <a className="bg-[#EAEFDE] text-red-900 px-3 py-2 rounded-full" href="\">Home</a>
             <a href="#about" className="text-red-900">About</a>
-            <a href="#" className="text-red-900">Menu</a>
-            <a href="#" className="text-red-900">Contact</a>
+            <a href="#menu" className="text-red-900">Menu</a>
+            <a href="#contact" className="text-red-900">Contact</a>
             
-            <button className="text-black border border-red-900 px-5 py-2 rounded-full hover:bg-red-900 hover:text-white transition-all">
-              Order Now
-            </button>
+            <button
+  onClick={() => {
+    const section = document.getElementById("menu");
+    section?.scrollIntoView({ behavior: "smooth" });
+    setMenuOpen(false); 
+  }}
+  className="text-black border border-red-900 px-5 py-2 rounded-full hover:bg-red-900 hover:text-white transition-all"
+>
+  Order Now
+</button>
           </div>
         )}
       </div>

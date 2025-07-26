@@ -15,7 +15,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <Navbar />
-        {/* <AboutUs /> */}
         {children}
         <AboutUs />
         <MenuSection />

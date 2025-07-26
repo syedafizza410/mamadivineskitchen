@@ -289,11 +289,41 @@ const menuData: Record<Category, MenuItem[]> = {
 
 export default function MenuSection() {
   const [activeCategory, setActiveCategory] = useState<Category>('Continental Food');
+  const [selectedServe, setSelectedServe] = useState<Record<string, 'single' | 'double' | null>>({});
   const categories = Object.keys(menuData) as Category[];
+
+  const handleServeChange = (itemName: string, value: 'single' | 'double') => {
+    setSelectedServe((prev) => ({
+      ...prev,
+      [itemName]: value,
+    }));
+  };
+
+  const handleOrderNow = (item: MenuItem) => {
+    const serve = selectedServe[item.name];
+
+    if (activeCategory === 'Drinks' || activeCategory === 'Sides') {
+      const url = `https://wa.me/923233956495?text=${encodeURIComponent(
+        `Hello! I would like to order:\n\n${item.name}\nPrice: ${item.single}\n\nPlease confirm the availability. Thank you!`
+      )}`;
+      window.open(url, '_blank');
+      return;
+    }
+
+    if (!serve) {
+      alert('Please select serve before clicking Order Now.');
+      return;
+    }
+
+    const price = serve === 'single' ? item.single : item.double;
+    const url = `https://wa.me/923233956495?text=${encodeURIComponent(
+      `Hello! I would like to order:\n${item.name} - ${serve === 'single' ? 'Single Serve' : 'Double Serve'}\nPrice: ${price}\nPlease confirm the availability. Thank you!`
+    )}`;
+    window.open(url, '_blank');
+  };
 
   return (
     <section id="menu" className="bg-white py-16 px-4 md:px-12">
-      {/* Heading & Note */}
       <div className="text-center mb-10">
         <h2 className="text-3xl md:text-4xl font-bold text-red-900 font-serif">Our Delicious Menu</h2>
         <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
@@ -301,7 +331,6 @@ export default function MenuSection() {
         </p>
       </div>
 
-      {/* Category Tabs */}
       <div className="flex flex-wrap justify-center gap-4 mb-8">
         {categories.map((cat) => (
           <button
@@ -318,7 +347,7 @@ export default function MenuSection() {
         ))}
       </div>
 
-       {activeCategory === 'Frozen Items' && (
+      {activeCategory === 'Frozen Items' && (
         <div className="mb-6 bg-yellow-100 border-l-4 border-red-900 p-4 text-yellow-800 rounded">
           <p className="text-center font-medium">
             Note: Every frozen item order comes with free chutney or ketchup — whichever is available!
@@ -326,7 +355,6 @@ export default function MenuSection() {
         </div>
       )}
 
-      {/* Menu Items */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {menuData[activeCategory].map((item: MenuItem, index: number) => (
           <div
@@ -342,26 +370,51 @@ export default function MenuSection() {
             />
             <h3 className="text-2xl font-semibold text-red-900">{item.name}</h3>
 
-            {/* Conditional Pricing */}
             {activeCategory === 'Drinks' || activeCategory === 'Sides' ? (
               <p className="text-gray-700">
-                <span className='font-semibold text-red-900'>Price: </span>
+                <span className="font-semibold text-red-900">Price: </span>
                 <span className="font-medium">{item.single}</span>
               </p>
             ) : (
               <>
                 <p className="text-gray-700">
-                  <span className='font-semibold text-red-900'>Single Serve: </span>
+                  <span className="font-semibold text-red-900">Single Serve: </span>
                   <span className="font-medium">{item.single}</span>
                 </p>
                 <p className="text-gray-700">
-                  <span className='font-semibold text-red-900'>Double Serve: </span>
+                  <span className="font-semibold text-red-900">Double Serve: </span>
                   <span className="font-medium">{item.double}</span>
                 </p>
+
+                <div className="flex gap-4 mt-2">
+                  <label className="flex items-center gap-1 text-sm text-gray-700">
+                    <input
+                      type="radio"
+                      name={`serve-${item.name}`}
+                      value="single"
+                      checked={selectedServe[item.name] === 'single'}
+                      onChange={() => handleServeChange(item.name, 'single')}
+                    />
+                    Single
+                  </label>
+                  <label className="flex items-center gap-1 text-sm text-gray-700">
+                    <input
+                      type="radio"
+                      name={`serve-${item.name}`}
+                      value="double"
+                      checked={selectedServe[item.name] === 'double'}
+                      onChange={() => handleServeChange(item.name, 'double')}
+                    />
+                    Double
+                  </label>
+                </div>
               </>
             )}
 
-            <button className="text-black border border-red-900 px-5 py-2 rounded-full hover:bg-red-900 hover:text-white transition-all">
+            <button
+              onClick={() => handleOrderNow(item)}
+              className="mt-3 text-black border border-red-900 px-5 py-2 rounded-full hover:bg-red-900 hover:text-white transition-all"
+            >
               Order Now
             </button>
           </div>
